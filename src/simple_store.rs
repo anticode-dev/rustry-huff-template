@@ -1,16 +1,20 @@
-use revm::primitives::{Address, U256};
+use hex;
+use revm::primitives::{alloy_primitives::Uint, Address, U256};
 use rustry_macros::{huff, rustry_test};
 use rustry_test::{
+    common::contract::Contract,
     prelude::*,
-    utils::abi::{abi_decode, abi_encode_signature, AbiType},
+    utils::{
+        abi::{abi_decode, abi_encode_signature, AbiType},
+        constants::bytes_zero,
+    },
 };
-#[allow(dead_code)]
 fn set_up() {
     let mut provider = Provider::default();
 
     let simple_store = huff! {"./src/contracts/simple_store.huff"};
 
-    let _simple_store = simple_store.deploy(&mut provider);
+    let mut simple_store = simple_store.deploy(&mut provider);
 }
 
 #[rustry_test(set_up)]
@@ -30,7 +34,7 @@ fn test_set_value() {
 
     assert_eq!(number, U256::from(number));
 }
-#[allow(dead_code)]
+
 fn get_value(caddr: Address, provider: &mut Provider) -> U256 {
     let ret = provider.staticcall(caddr, abi_encode_signature("getValue()", vec![]).into());
     assert!(ret.is_success());
