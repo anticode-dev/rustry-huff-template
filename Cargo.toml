@@ -1,0 +1,17 @@
+[package]
+name = "aori-vault-huff"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[bin]]
+name = "simple_store"
+path = "src/simple_store.rs"
+
+[dependencies]
+rustry_macros = { git = "https://github.com/anticode-dev/rustry/" }
+rustry_test = { git = "https://github.com/anticode-dev/rustry/" }
+
+revm = "3.5.0"
+hex = "0.4.3"
