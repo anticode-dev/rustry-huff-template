@@ -24,15 +24,15 @@ fn test_deployment() {
 #[rustry_test(set_up)]
 fn test_set_value() {
     let number = 2;
-    let value = Uint::<256, 4>::from(*&number);
+    let value = Uint::<256, 4>::from(number);
 
     let data = abi_encode_signature("setValue(uint256)", vec![value.to_be_bytes::<32>().to_vec()]);
 
     provider.call(simple_store.address, data.into()).success();
 
-    let number = get_value(simple_store.address, &mut provider);
+    let got_number = get_value(simple_store.address, &mut provider);
 
-    assert_eq!(number, U256::from(number));
+    assert_eq!(got_number, U256::from(number));
 }
 
 fn get_value(caddr: Address, provider: &mut Provider) -> U256 {
